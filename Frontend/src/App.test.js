@@ -183,7 +183,8 @@ test('keeps multiple live sessions individually readable and navigable', () => {
     />,
   );
 
-  expect(screen.getByRole('heading', { name: 'Live Sessions' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Upcoming Sessions' })).toBeInTheDocument();
+  expect(screen.getByText('Next on the calendar')).toBeInTheDocument();
   expect(screen.getByText('Think Architecture Together S1')).toBeInTheDocument();
   expect(screen.getByText('QEMU Lab: Tracing a Boot Sequence')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Previous live session' })).toBeInTheDocument();
