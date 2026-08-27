@@ -398,129 +398,91 @@
   }
 }
 
-/* More card styles */
-.more-card {
-  flex: 0 0 auto;
-  width: 100%;
-  max-width: clamp(40s0px, 90vw, 400px);
-  min-width: clamp(350px, 85vw, 320px);
-  height: clamp(460px, 40vw, 500px);
-  scroll-snap-align: center;
+/* The terminal card shares the project-card dimensions and owns its hover. */
+.Projects-page .more-card {
   position: relative;
+  z-index: 0;
+  flex: 0 0 clamp(285px, 30vw, 360px);
+  width: clamp(285px, 30vw, 360px);
+  min-width: 0;
+  max-width: none;
+  height: 30.5rem;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  scroll-snap-align: start;
 }
 
-.more-card-link {
-  text-decoration: none;
+.Projects-page .more-card-link {
   display: block;
   width: 100%;
   height: 100%;
+  color: inherit;
+  text-decoration: none;
 }
 
-.more-cards-content {
-  background: rgba(59, 130, 246, 0.15);
-  border: 2px dashed rgba(59, 130, 246, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.Projects-page .more-card-content {
   position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (hover: hover) {
-  .more-card:hover .more-cards-content {
-    background: rgba(59, 130, 246, 0.25);
-    border-color: rgba(59, 130, 246, 0.6);
-    transform: translateY(-12px) scale(1.03);
-    box-shadow:
-      0 20px 60px rgba(59, 130, 246, 0.4),
-      0 10px 30px rgba(59, 130, 246, 0.3),
-      0 0 80px rgba(59, 130, 246, 0.2);
-  }
-}
-
-.more-card-inner {
-  text-align: center;
-  color: #3b82f6;
-  padding: clamp(1.5rem, 4vw, 2rem);
+  isolation: isolate;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: clamp(0.5rem, 2vw, 0.75rem);
-}
-
-.more-icon {
-  opacity: 0.8;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  color: #3b82f6;
-}
-
-@media (hover: hover) {
-  .more-card:hover .more-icon {
-    opacity: 1;
-    transform: scale(1.1) rotate(5deg);
-    color: #1d4ed8;
-  }
-}
-
-.more-title {
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
-  font-weight: 700;
-  margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
-  transition: all 0.3s ease;
-  color: #22d3ee !important;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-
-@media (hover: hover) {
-  .more-card:hover .more-title {
-    color: #1d4ed8 !important;
-    transform: translateY(-2px);
-  }
-}
-
-.more-description {
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.6;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-  text-align: center;
-}
-
-.more-arrow {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.7;
-  color: #3b82f6;
-}
-
-@media (hover: hover) {
-  .more-card:hover .more-arrow {
-    opacity: 1;
-    transform: translateX(4px) translateY(-2px);
-    color: #1d4ed8;
-  }
-}
-
-.more-card-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
-  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--surface-subtle);
+  border: 1px solid var(--line-soft);
+  border-radius: 1.25rem;
+  transition: color 260ms ease, background-color 260ms ease, border-color 260ms ease, transform 400ms cubic-bezier(.2, .8, .2, 1);
 }
 
-@media (hover: hover) {
-  .more-card:hover .more-card-content::before {
-    left: 100%;
+.Projects-page .more-card-inner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: .75rem;
+  text-align: center;
+}
+
+.Projects-page .more-icon,
+.Projects-page .more-arrow {
+  color: var(--signal);
+  transition: color 260ms ease, transform 260ms ease;
+}
+
+.Projects-page .more-title {
+  margin: .25rem 0 0;
+  color: inherit;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 560;
+  letter-spacing: -.04em;
+}
+
+.Projects-page .more-description {
+  max-width: 19rem;
+  margin: 0 0 .5rem;
+  color: var(--ink-muted);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .Projects-page .more-card:hover { z-index: 2; }
+
+  .Projects-page .more-card:hover .more-card-content {
+    color: var(--paper);
+    background: var(--signal);
+    border-color: var(--signal);
+    transform: translateY(-.45rem);
   }
+
+  .Projects-page .more-card:hover .more-icon,
+  .Projects-page .more-card:hover .more-arrow,
+  .Projects-page .more-card:hover .more-description { color: var(--paper); }
+
+  .Projects-page .more-card:hover .more-arrow { transform: translate(.2rem, -.2rem); }
 }
 
 /* Mobile-specific responsive breakpoints */

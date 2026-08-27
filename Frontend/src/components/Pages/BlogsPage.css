@@ -61,6 +61,8 @@
 .blogs-page .right-arrow { right: -1.35rem; }
 
 .blogs-page .more-card {
+  position: relative;
+  z-index: 0;
   flex: 0 0 clamp(274px, 28vw, 340px);
   width: clamp(274px, 28vw, 340px);
   height: 36rem;
@@ -76,6 +78,8 @@
 }
 
 .blogs-page .more-card-content {
+  position: relative;
+  isolation: isolate;
   display: flex;
   width: 100%;
   height: 100%;
@@ -88,10 +92,13 @@
 }
 
 .blogs-page .more-card:hover .more-card-content {
-  border-color: rgba(224, 82, 44, .58);
-  background: #e9e3d7;
+  border-color: var(--signal);
+  color: var(--paper);
+  background: var(--signal);
   transform: translateY(-.45rem);
 }
+
+.blogs-page .more-card:hover { z-index: 2; }
 
 .blogs-page .more-card-inner {
   display: flex;
@@ -105,12 +112,14 @@
 }
 
 .blogs-page .more-icon,
-.blogs-page .more-arrow { color: var(--signal); transition: transform 260ms ease; }
+.blogs-page .more-arrow { color: var(--signal); transition: color 260ms ease, transform 260ms ease; }
+.blogs-page .more-card:hover .more-icon,
+.blogs-page .more-card:hover .more-arrow { color: var(--paper); }
 .blogs-page .more-card:hover .more-arrow { transform: translate(.2rem, -.2rem); }
 
 .blogs-page .more-title {
   margin: .25rem 0 0;
-  color: var(--ink) !important;
+  color: inherit;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.55rem;
   font-weight: 560;
@@ -120,10 +129,12 @@
 .blogs-page .more-description {
   max-width: 19rem;
   margin: 0 0 .5rem;
-  color: var(--ink-muted) !important;
+  color: var(--ink-muted);
   font-size: .88rem;
   line-height: 1.6;
 }
+
+.blogs-page .more-card:hover .more-description { color: var(--paper); }
 
 .blogs-page .read-more-container {
   display: flex;

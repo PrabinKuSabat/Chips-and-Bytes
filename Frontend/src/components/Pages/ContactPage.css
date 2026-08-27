@@ -52,85 +52,19 @@
 }
 
 .contact-page__signal {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  min-height: 32rem;
-  overflow: hidden;
-  padding: clamp(1.7rem, 4vw, 3.1rem);
-  color: var(--paper);
-  background: var(--surface-ink);
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.contact-page__signal::before,
-.contact-page__signal::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  border: 1px solid rgba(224, 82, 44, .35);
-  border-radius: 50%;
-}
-
-.contact-page__signal::before {
-  right: -8rem;
-  bottom: -8rem;
-  width: 23rem;
-  height: 23rem;
-  box-shadow: 0 0 0 3.5rem rgba(224, 82, 44, .05), 0 0 0 7rem rgba(224, 82, 44, .025);
-}
-
-.contact-page__signal::after {
-  top: 31%;
-  right: 12%;
-  width: .5rem;
-  height: .5rem;
-  background: var(--signal);
-  box-shadow: 0 0 0 .65rem rgba(224, 82, 44, .12);
-  animation: contact-pulse 2.4s ease-out infinite;
-}
-
-.contact-page__chip {
   display: grid;
-  width: 5.25rem;
-  height: 5.25rem;
-  border: 1px solid rgba(248, 245, 237, .24);
-  border-radius: 1rem;
-  color: var(--signal-soft);
+  min-height: 32rem;
+  padding: clamp(1.7rem, 4vw, 3.1rem);
+  background: var(--surface-ink);
   place-items: center;
 }
 
-.contact-page__signal p {
-  margin: 0 0 .65rem;
-  color: var(--signal-soft);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: .62rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.contact-page__signal h2 {
-  max-width: 12ch;
-  margin: 0;
-  color: var(--paper);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.9rem, 3.3vw, 3.2rem);
-  font-weight: 480;
-  letter-spacing: -.06em;
-  line-height: 1.02;
-}
-
-.contact-page__signal > span {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  color: var(--paper-muted);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: .58rem;
-  letter-spacing: .06em;
-  line-height: 1.6;
-  text-transform: uppercase;
+.contact-page__club-logo {
+  display: block;
+  width: min(100%, 26rem);
+  max-height: 25rem;
+  opacity: 1;
+  object-fit: contain;
 }
 
 .contact-form {
@@ -249,15 +183,11 @@
 
 .submit-button:disabled { cursor: wait; opacity: .58; }
 
-@keyframes contact-pulse {
-  70%, 100% { box-shadow: 0 0 0 1.3rem rgba(224, 82, 44, 0); }
-}
-
 @media (max-width: 850px) {
   .contact-page__header,
   .contact-page__layout { grid-template-columns: 1fr; }
   .contact-page__signal { min-height: 23rem; }
-  .contact-page__signal h2 { max-width: 16ch; }
+  .contact-page__club-logo { width: min(78vw, 25rem); max-height: 18rem; }
 }
 
 @media (max-width: 560px) {
@@ -265,8 +195,4 @@
   .form-group--message { grid-column: auto; }
   .contact-form__topline { align-items: flex-start; flex-direction: column; }
   .submit-button { width: 100%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .contact-page__signal::after { animation: none; }
 }

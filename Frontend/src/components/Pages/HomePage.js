@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { ArrowUpRight, Cpu } from 'lucide-react';
 import './HomePage.css';
 import AboutPage from './AboutPage';
 import EventsPage from './EventsPage';
@@ -60,7 +59,9 @@ const HomePage = () => {
       <div id="contact-section" className="tab-section-container"><ContactPage /></div>
 
       <div className="admin-entry">
-        <Link to="/admin" aria-label="Admin login"><Cpu size={16} /><span>Club admin</span><ArrowUpRight size={14} /></Link>
+        <Link to="/admin" aria-label="Admin login">
+          <img src="/assets/logo_blue_full.png" alt="" />
+        </Link>
       </div>
     </div>
   );

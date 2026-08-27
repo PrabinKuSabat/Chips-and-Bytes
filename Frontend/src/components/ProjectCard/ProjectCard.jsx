@@ -17,7 +17,7 @@ const ProjectCard = ({ project, className = '' }) => (
           />
         ) : (
           <div className="project-card-fallback" aria-hidden="true">
-            <FaGithub size={54} />
+            <FaGithub size={74} />
           </div>
         )}
         <div className="project-card-overlay" aria-hidden="true" />

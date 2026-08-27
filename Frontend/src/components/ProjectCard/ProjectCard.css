@@ -42,13 +42,12 @@
   position: absolute;
   inset: 0;
   display: grid;
-  color: rgba(248, 245, 237, .82);
-  background:
-    linear-gradient(125deg, transparent 48%, rgba(255, 255, 255, .14) 49% 50%, transparent 51%),
-    radial-gradient(circle at 72% 20%, rgba(224, 82, 44, .82), transparent 32%),
-    #18201c;
+  color: var(--paper);
+  background: var(--surface-ink);
   place-items: center;
 }
+
+.project-card-fallback svg { opacity: 1; filter: none; }
 
 .project-card-overlay {
   position: absolute;
@@ -102,6 +101,19 @@
   line-height: 1.55;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+}
+
+.project-repository-link .external-card-link__icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  opacity: 1;
+}
+
+.project-repository-link .external-card-link__icon svg {
+  width: 1.55rem;
+  height: 1.55rem;
+  opacity: 1;
+  filter: none;
 }
 
 @media (hover: hover) and (pointer: fine) {

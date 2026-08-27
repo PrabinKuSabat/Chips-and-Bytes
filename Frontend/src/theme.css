@@ -198,7 +198,7 @@ h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
   text-transform: uppercase;
 }
 .read-more-link:hover { color: var(--signal) !important; }
-.more-card-content, .more-cards-content { background: var(--surface-subtle) !important; border-color: var(--line-soft) !important; }
+.more-card-content, .more-cards-content { background: var(--surface-subtle); border-color: var(--line-soft); }
 
 .blog-details-container, .event-details-container, .project-details-container {
   min-height: 100vh;

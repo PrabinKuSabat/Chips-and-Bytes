@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import AboutPage from './components/Pages/AboutPage';
 import BlogCard from './components/BlogCard/BlogCard';
 import CinematicHero from './components/CinematicHero/CinematicHero';
+import ContactPage from './components/Pages/ContactPage';
 import ProjectCard from './components/ProjectCard/ProjectCard';
 import LiveSessions from './components/LiveSessions/LiveSessions';
 import Navbar from './components/Navbar/Navbar';
@@ -71,6 +72,14 @@ test('shows a visible GitHub destination on project cards', () => {
   const link = screen.getByRole('link', { name: /View Example architecture project repository on GitHub/i });
   expect(link).toHaveAttribute('href', 'https://github.com/PrabinKuSabat/example');
   expect(screen.getByText('github.com')).toBeInTheDocument();
+});
+
+test('keeps the contact panel focused on the club identity', () => {
+  render(<ContactPage />);
+
+  expect(screen.getByRole('img', { name: 'Chips & Bytes' })).toHaveAttribute('src', '/assets/logo_white_full.png');
+  expect(screen.queryByText(/Start a conversation/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Build, study and think architecture together/i)).not.toBeInTheDocument();
 });
 
 test('uses an accessible compact header menu and closes it after five seconds', () => {
