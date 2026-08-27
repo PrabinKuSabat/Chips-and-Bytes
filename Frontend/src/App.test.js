@@ -173,12 +173,26 @@ test('opens with the requested welcome and retains the original hero copy', () =
   unmount();
 });
 
-test('keeps multiple live sessions individually readable and navigable', () => {
+test('keeps multiple structured sessions individually readable and navigable', () => {
   render(
     <LiveSessions
       sessions={[
-        { _id: 'one', text: 'Think Architecture Together S1' },
-        { _id: 'two', text: 'QEMU Lab: Tracing a Boot Sequence' },
+        {
+          _id: 'one',
+          title: 'Think Architecture Together S1',
+          date: '2026-08-22T00:00:00.000Z',
+          time: '15:10',
+          location: '1st Mtech Lab',
+          description: 'Conceptual problem solving on Amdahl’s Law and redundancy.',
+        },
+        {
+          _id: 'two',
+          title: 'QEMU Lab: Tracing a Boot Sequence',
+          date: '2026-08-29T00:00:00.000Z',
+          time: '11:00',
+          location: 'Systems Studio',
+          description: 'Trace the startup path from firmware to a running kernel.',
+        },
       ]}
     />,
   );
@@ -187,6 +201,15 @@ test('keeps multiple live sessions individually readable and navigable', () => {
   expect(screen.getByText('Next on the calendar')).toBeInTheDocument();
   expect(screen.getByText('Think Architecture Together S1')).toBeInTheDocument();
   expect(screen.getByText('QEMU Lab: Tracing a Boot Sequence')).toBeInTheDocument();
+  expect(screen.getByText('1st Mtech Lab')).toBeInTheDocument();
+  expect(screen.getByText(/Conceptual problem solving/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Previous live session' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Next live session' })).toBeInTheDocument();
+});
+
+test('keeps legacy announcement sessions readable while events are being introduced', () => {
+  render(<LiveSessions sessions={[{ _id: 'legacy', text: 'QEMU lab announcement' }]} />);
+
+  expect(screen.getByText('QEMU lab announcement')).toBeInTheDocument();
+  expect(screen.getByText('Scheduled session')).toBeInTheDocument();
 });

@@ -2,6 +2,29 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, CalendarClock } from 'lucide-react';
 import './LiveSessions.css';
 
+const formatSessionDate = (value) => {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+};
+
+const formatSessionTime = (value) => {
+  if (!value) return '';
+  const [hours, minutes] = value.split(':').map(Number);
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return value;
+  const date = new Date(2000, 0, 1, hours, minutes);
+  return new Intl.DateTimeFormat('en', {
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+};
+
 const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
   const railRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -60,13 +83,23 @@ const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
             {items.map((session, index) => (
               <article
                 className="live-session-card"
-                key={session._id || `${session.text}-${index}`}
+                key={session._id || `${session.title || session.text}-${index}`}
                 style={{ '--session-index': index }}
               >
                 <div className="live-session-card__number">{String(index + 1).padStart(2, '0')}</div>
                 <CalendarClock size={26} strokeWidth={1.45} aria-hidden="true" />
-                <p>{session.text}</p>
-                <span>Scheduled session</span>
+                <div className="live-session-card__content">
+                  <h3>{session.title || session.text}</h3>
+                  {(session.date || session.time || session.location) && (
+                    <dl className="live-session-card__details">
+                      {session.date && <div><dt>Date</dt><dd>{formatSessionDate(session.date)}</dd></div>}
+                      {session.time && <div><dt>Time</dt><dd>{formatSessionTime(session.time)}</dd></div>}
+                      {session.location && <div><dt>Venue</dt><dd>{session.location}</dd></div>}
+                    </dl>
+                  )}
+                  {session.description && <p className="live-session-card__description">{session.description}</p>}
+                </div>
+                <span className="live-session-card__label">Scheduled session</span>
               </article>
             ))}
           </div>

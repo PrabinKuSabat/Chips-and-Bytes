@@ -14,14 +14,21 @@ import { usePublicResource } from '../../hooks/usePublicResource';
 import CinematicHero from '../CinematicHero/CinematicHero';
 import LiveSessions from '../LiveSessions/LiveSessions';
 
-const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/announcements`;
+const ANNOUNCEMENTS_API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/announcements`;
+const EVENTS_API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/events`;
 
 const HomePage = () => {
-  const { data: announcements, isRefreshing: loadingAnnouncements } = usePublicResource({
+  const { data: announcements } = usePublicResource({
     cacheKey: 'announcements',
-    url: API_URL,
+    url: ANNOUNCEMENTS_API_URL,
     fallback: publicContentFallback.announcements,
   });
+  const { data: events, isRefreshing: loadingEvents } = usePublicResource({
+    cacheKey: 'events',
+    url: EVENTS_API_URL,
+    fallback: publicContentFallback.events,
+  });
+  const sessions = Array.isArray(events) && events.length > 0 ? events : announcements;
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll('.tab-section-container'));
@@ -47,7 +54,7 @@ const HomePage = () => {
         onJoin={() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })}
       />
 
-      <LiveSessions sessions={announcements} isRefreshing={loadingAnnouncements} />
+      <LiveSessions sessions={sessions} isRefreshing={loadingEvents} />
 
       <div id="about-us" className="tab-section-container"><AboutPage /></div>
       <div id="members-section" className="tab-section-container"><MembersPage /></div>

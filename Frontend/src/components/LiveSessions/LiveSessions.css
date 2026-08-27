@@ -21,7 +21,8 @@
 .live-sessions__eyebrow,
 .live-sessions__state,
 .live-session-card__number,
-.live-session-card > span,
+.live-session-card__label,
+.live-session-card__details dt,
 .live-sessions__controls {
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
@@ -110,7 +111,13 @@
   grid-row: 2;
 }
 
-.live-session-card p {
+.live-session-card__content {
+  align-self: center;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.live-session-card h3 {
   max-width: 54ch;
   margin: -.1rem 0 0;
   color: var(--ink);
@@ -120,11 +127,39 @@
   letter-spacing: -.04em;
   line-height: 1.15;
   text-wrap: balance;
-  grid-column: 2;
-  grid-row: 2;
 }
 
-.live-session-card > span {
+.live-session-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1rem;
+  margin: .8rem 0 0;
+}
+
+.live-session-card__details div {
+  display: flex;
+  gap: .35rem;
+  color: var(--ink-muted);
+  font-size: .76rem;
+}
+
+.live-session-card__details dt {
+  color: var(--signal);
+  font-size: .57rem;
+  letter-spacing: .08em;
+}
+
+.live-session-card__details dd { margin: 0; }
+
+.live-session-card__description {
+  max-width: 64ch;
+  margin: .7rem 0 0;
+  color: var(--ink-muted);
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+.live-session-card__label {
   color: var(--ink-muted);
   font-size: .58rem;
   letter-spacing: .09em;
@@ -180,7 +215,8 @@
 @media (max-width: 700px) {
   .live-sessions__header { align-items: flex-start; flex-direction: column; }
   .live-session-card { flex-basis: 90%; min-height: 15rem; }
-  .live-session-card p { font-size: 1.28rem; }
+  .live-session-card h3 { font-size: 1.28rem; }
+  .live-session-card__details { gap: .35rem .7rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
