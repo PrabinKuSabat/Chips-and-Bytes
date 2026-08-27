@@ -17,7 +17,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowUpRight, Cpu, Send } from 'lucide-react';
 import './ContactPage.css';
-import '../../style.css';
 
 const initialForm = { name: '', email: '', message: '' };
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

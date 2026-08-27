@@ -25,6 +25,7 @@ const authRoutes = require('./routes/auth');
 const announcementRoutes = require('./routes/announcements');
 const pastEventsRoutes = require('./routes/pastevents');
 const blogPreviewRoutes = require('./routes/blogPreviews');
+const newsRoutes = require('./routes/news');
 const { warmBlogPreviewCache } = require('./services/blogPreviewCache');
 
 const app = express();
@@ -52,10 +53,16 @@ app.get('/', (req, res) => {
   res.send('Backend is running 🚀');
 });
 
+app.get('/api/health', (req, res) => {
+  res.set('Cache-Control', 'private, no-store');
+  res.json({ status: 'ready' });
+});
+
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/pastevents', pastEventsRoutes);
 app.use('/api/blog-previews', blogPreviewRoutes);
+app.use('/api/news', newsRoutes);
 
 module.exports = app;

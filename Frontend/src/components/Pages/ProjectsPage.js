@@ -20,7 +20,6 @@ import { Link } from 'react-router-dom';
 import { gitLinks } from '../../data/constants';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import './ProjectsPage.css';
-import '../../style.css';
 
 const ProjectsPage = () => {
   const [projectData, setProjectData] = useState(gitLinks);

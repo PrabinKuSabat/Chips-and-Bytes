@@ -3,6 +3,7 @@ import { ArrowUpRight, Cpu } from 'lucide-react';
 import './HomePage.css';
 import AboutPage from './AboutPage';
 import EventsPage from './EventsPage';
+import NewsPage from './NewsPage';
 import ProjectsPage from './ProjectsPage';
 import BlogsPage from './BlogsPage';
 import MentorsPage from './MentorsPage';
@@ -52,6 +53,7 @@ const HomePage = () => {
       <div id="about-us" className="tab-section-container"><AboutPage /></div>
       <div id="members-section" className="tab-section-container"><MembersPage /></div>
       <div id="events-section" className="tab-section-container"><EventsPage /></div>
+      <div id="news-section" className="tab-section-container"><NewsPage /></div>
       <div id="projects-section" className="tab-section-container"><ProjectsPage /></div>
       <div id="blogs-section" className="tab-section-container"><BlogsPage /></div>
       <div id="mentors-section" className="tab-section-container"><MentorsPage /></div>

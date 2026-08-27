@@ -20,7 +20,6 @@ import { Link } from 'react-router-dom';
 import { useBlogPreviews } from '../../hooks/useBlogPreviews';
 import BlogCard from '../BlogCard/BlogCard';
 import './BlogsPage.css';
-import '../../style.css';
 
 const BlogsPage = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);

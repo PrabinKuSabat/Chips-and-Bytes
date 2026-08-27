@@ -18,7 +18,6 @@ import { Link } from 'react-router-dom';
 import { publicContentFallback } from '../../data/publicContentFallback';
 import { usePublicResource } from '../../hooks/usePublicResource';
 import './EventsPage.css';
-import '../../style.css';
 
 const EventsPage = () => {
   const { data: events, isRefreshing, error } = usePublicResource({

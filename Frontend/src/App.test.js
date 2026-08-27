@@ -5,9 +5,11 @@ import CinematicHero from './components/CinematicHero/CinematicHero';
 import ProjectCard from './components/ProjectCard/ProjectCard';
 import LiveSessions from './components/LiveSessions/LiveSessions';
 import Navbar from './components/Navbar/Navbar';
+import NewsPage from './components/Pages/NewsPage';
 
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({ pathname: '/' }),
+  Link: ({ to, children, ...props }) => <a href={to} {...props}>{children}</a>,
 }), { virtual: true });
 
 beforeEach(() => {
@@ -82,6 +84,11 @@ test('uses an accessible compact header menu and closes it after five seconds', 
   expect(screen.queryByText('Computer Architecture Club')).not.toBeInTheDocument();
   expect(menuButton).toHaveAttribute('aria-expanded', 'true');
   expect(screen.getByRole('button', { name: 'Blogs' })).toHaveAttribute('tabindex', '0');
+  expect(screen.getByRole('button', { name: 'About' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'News' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Contact' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'About Us' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Contact Us' })).not.toBeInTheDocument();
 
   act(() => jest.advanceTimersByTime(4999));
   expect(menuButton).toHaveAttribute('aria-expanded', 'true');
@@ -101,6 +108,27 @@ test('uses an accessible compact header menu and closes it after five seconds', 
 
   unmount();
   jest.useRealTimers();
+});
+
+test('shows only the current dated news edition with numbered headings and reading links', () => {
+  const now = new Date();
+  const dateKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  window.localStorage.setItem(`chips-and-bytes:public-resource:news-${dateKey}`, JSON.stringify({
+    savedAt: Date.now(),
+    value: [
+      { _id: 'one', heading: 'A new processor arrives', summary: 'Why its cache hierarchy matters.' },
+      { _id: 'two', heading: 'An AI systems update', summary: 'The architecture implication in brief.' },
+    ],
+  }));
+
+  render(<NewsPage />);
+
+  expect(screen.getByRole('heading', { name: 'News' })).toBeInTheDocument();
+  expect(screen.getByText('01')).toBeInTheDocument();
+  expect(screen.getByText('02')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'A new processor arrives' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Read today’s complete note/i })).toHaveAttribute('href', `/news/${dateKey}`);
+  expect(screen.getByRole('link', { name: /Browse all news/i })).toHaveAttribute('href', '/news');
 });
 
 test('opens with the requested welcome and retains the original hero copy', () => {

@@ -28,6 +28,7 @@ const sectionMap = {
   home: null,
   about: 'about-us',
   events: 'events-section',
+  news: 'news-section',
   projects: 'projects-section',
   blogs: 'blogs-section',
   members: 'members-section',
@@ -37,13 +38,14 @@ const sectionMap = {
 
 const navigationItems = [
   { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About Us' },
+  { id: 'about', label: 'About' },
   { id: 'members', label: 'Members' },
   { id: 'events', label: 'Events' },
+  { id: 'news', label: 'News' },
   { id: 'projects', label: 'Projects' },
   { id: 'blogs', label: 'Blogs' },
   { id: 'mentors', label: 'Mentors' },
-  { id: 'contact', label: 'Contact Us' }
+  { id: 'contact', label: 'Contact' }
 ];
 
 const MENU_CLOSE_DELAY_MS = 5000;
@@ -88,6 +90,8 @@ const Navbar = ({ activeTab, setActiveTab, navigate }) => {
       setActiveTab('blogs');
     } else if (path.startsWith('/projects')) {
       setActiveTab('projects');
+    } else if (path.startsWith('/news')) {
+      setActiveTab('news');
     }
     // For home page, let scroll detection handle it
   }, [location.pathname, setActiveTab]);
@@ -203,6 +207,7 @@ const Navbar = ({ activeTab, setActiveTab, navigate }) => {
         { id: 'about', element: document.getElementById('about-us') },
         { id: 'members', element: document.getElementById('members-section') },
         { id: 'events', element: document.getElementById('events-section') },
+        { id: 'news', element: document.getElementById('news-section') },
         { id: 'projects', element: document.getElementById('projects-section') },
         { id: 'blogs', element: document.getElementById('blogs-section') },
         { id: 'mentors', element: document.getElementById('mentors-section') },

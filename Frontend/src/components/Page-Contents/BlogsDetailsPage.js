@@ -18,7 +18,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useBlogPreviews } from '../../hooks/useBlogPreviews';
 import BlogCard from '../BlogCard/BlogCard';
 import './BlogsDetailsPage.css';
-import '../../style.css';
 import { useLocation } from "react-router-dom";
 
 const BlogsDetailsPage = () => {

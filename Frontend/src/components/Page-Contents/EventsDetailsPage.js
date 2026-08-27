@@ -15,7 +15,6 @@
 
 import React from 'react';
 import './EventsDetailsPage.css';
-import '../../style.css';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { publicContentFallback } from '../../data/publicContentFallback';
 import { usePublicResource } from '../../hooks/usePublicResource';

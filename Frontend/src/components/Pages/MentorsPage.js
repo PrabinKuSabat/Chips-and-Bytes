@@ -15,7 +15,6 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './MentorsPage.css';
-import '../../style.css';
 import { mentors } from '../../data/constants';
 import { FaLinkedin } from 'react-icons/fa';
 

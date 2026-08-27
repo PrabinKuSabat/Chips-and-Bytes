@@ -2,7 +2,7 @@
  * @file AdminDashboard.js
  * @description
  * Admin dashboard page for Chips & Bytes website.
- * Allows navigation to announcement, event, and past event editors.
+ * Allows navigation to announcement, event, news, and past event editors.
  * Handles admin logout.
  * 
  * Features:
@@ -41,6 +41,9 @@ const AdminDashboard = () => {
           </li>
           <li>
             <Link to="/admin/past-events-edit">Edit Past Events</Link>
+          </li>
+          <li>
+            <Link to="/admin/news-edit">Edit Daily News</Link>
           </li>
         </ul>
       </nav>

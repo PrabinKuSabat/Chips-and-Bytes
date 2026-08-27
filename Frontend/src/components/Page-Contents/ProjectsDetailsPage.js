@@ -18,7 +18,6 @@ import React, { useEffect, useState } from 'react';
 import { gitLinks } from '../../data/constants';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import './ProjectsDetailsPage.css';
-import '../../style.css';
 
 const ProjectsDetailsPage = () => {
   const [projects, setProjects] = useState(gitLinks);

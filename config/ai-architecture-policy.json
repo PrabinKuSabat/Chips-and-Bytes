@@ -44,7 +44,20 @@
     ["Backend/package.json", "Backend/package-lock.json"]
   ],
   "browserContract": {
-    "routes": ["/", "/blogs", "/blogs/details", "/projects", "/projects/details", "/events", "/events/details"],
+    "routes": [
+      "/",
+      "/blogs",
+      "/blogs/details",
+      "/projects",
+      "/projects/details",
+      "/events",
+      "/events/details",
+      "/news",
+      "/news/2026-08-27",
+      "/admin",
+      "/admin/dashboard",
+      "/admin/news-edit"
+    ],
     "effectiveViewports": [
       { "width": 1440, "height": 900 },
       { "width": 1024, "height": 768 },

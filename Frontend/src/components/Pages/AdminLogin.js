@@ -14,7 +14,7 @@
  * @returns {JSX.Element}
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
@@ -23,6 +23,21 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Wake the server and database while the administrator enters credentials.
+  // This request never blocks the form and is cancelled when the page unmounts.
+  useEffect(() => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    if (!backendUrl) return undefined;
+
+    const controller = new AbortController();
+    fetch(`${backendUrl}/api/health`, {
+      cache: 'no-store',
+      signal: controller.signal
+    }).catch(() => {});
+
+    return () => controller.abort();
+  }, []);
 
   /**
    * Handles admin login form submission.

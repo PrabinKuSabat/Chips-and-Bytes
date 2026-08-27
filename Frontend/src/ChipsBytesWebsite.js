@@ -10,7 +10,6 @@
 
 import React from 'react';
 import HomePage from './components/Pages/HomePage';
-import './style.css';
 
 const ChipsBytesWebsite = () => (
   <div className="app">

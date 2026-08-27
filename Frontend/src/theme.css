@@ -34,6 +34,18 @@ button { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
 img { max-width: 100%; }
 
+.route-loading {
+  display: grid;
+  min-height: 50vh;
+  padding: 8rem 1.25rem 3rem;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .06em;
+  place-items: center;
+  text-transform: uppercase;
+}
+
 h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
 .event-heading, .blog-heading, .project-heading, .tab-member-heading, .tab-mentor-heading {
   font-family: 'Space Grotesk', sans-serif;
