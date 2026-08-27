@@ -21,7 +21,6 @@
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css';
 
@@ -47,7 +46,7 @@ const navigationItems = [
   { id: 'contact', label: 'Contact Us' }
 ];
 
-const MENU_CLOSE_DELAY_MS = 2000;
+const MENU_CLOSE_DELAY_MS = 5000;
 
 /**
  * Navbar Component
@@ -265,6 +264,7 @@ const Navbar = ({ activeTab, setActiveTab, navigate }) => {
           ref={navigationRef}
           className={`nav-disclosure ${isNavigationOpen ? 'is-open' : ''}`}
           onMouseEnter={openNavigation}
+          onMouseMove={openNavigation}
           onMouseLeave={scheduleClose}
           onFocus={openNavigation}
           onBlur={handleNavigationBlur}
@@ -279,7 +279,6 @@ const Navbar = ({ activeTab, setActiveTab, navigate }) => {
             aria-label={`${isNavigationOpen ? 'Close' : 'Open'} site navigation`}
           >
             <span>Menu</span>
-            <ChevronDown size={15} strokeWidth={1.7} aria-hidden="true" />
           </button>
 
           <div

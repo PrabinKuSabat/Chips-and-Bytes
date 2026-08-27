@@ -71,7 +71,7 @@ test('shows a visible GitHub destination on project cards', () => {
   expect(screen.getByText('github.com')).toBeInTheDocument();
 });
 
-test('uses an accessible compact header menu and closes it after two seconds', () => {
+test('uses an accessible compact header menu and closes it after five seconds', () => {
   jest.useFakeTimers();
 
   const { unmount } = render(
@@ -83,11 +83,20 @@ test('uses an accessible compact header menu and closes it after two seconds', (
   expect(menuButton).toHaveAttribute('aria-expanded', 'true');
   expect(screen.getByRole('button', { name: 'Blogs' })).toHaveAttribute('tabindex', '0');
 
-  act(() => jest.advanceTimersByTime(2000));
+  act(() => jest.advanceTimersByTime(4999));
+  expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+
+  act(() => jest.advanceTimersByTime(1));
   expect(menuButton).toHaveAttribute('aria-expanded', 'false');
   expect(screen.getByRole('button', { name: 'Blogs', hidden: true })).toHaveAttribute('tabindex', '-1');
 
   fireEvent.click(menuButton);
+  expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+
+  act(() => jest.advanceTimersByTime(5000));
+  expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+
+  fireEvent.mouseEnter(menuButton.closest('.nav-disclosure'));
   expect(menuButton).toHaveAttribute('aria-expanded', 'true');
 
   unmount();
