@@ -45,6 +45,7 @@
   white-space: nowrap;
 }
 .nav-disclosure {
+  --nav-expanded-width: 38rem;
   position: relative;
   display: grid;
   width: 3.15rem;
@@ -58,15 +59,15 @@
   background: var(--paper);
   box-shadow: var(--shadow-soft);
   transition:
-    width 1000ms cubic-bezier(.2, .75, .2, 1),
-    border-radius 1000ms cubic-bezier(.2, .75, .2, 1),
-    background-color 1000ms ease,
-    box-shadow 1000ms ease;
+    width 650ms cubic-bezier(.2, .75, .2, 1),
+    border-radius 650ms cubic-bezier(.2, .75, .2, 1),
+    background-color 650ms ease,
+    box-shadow 650ms ease;
   will-change: width, border-radius;
 }
 
 .nav-disclosure.is-open {
-  width: min(44.5rem, calc(100vw - 13rem));
+  width: min(var(--nav-expanded-width), calc(100vw - 13rem));
   border-radius: 999px;
   background: var(--paper);
   box-shadow: var(--shadow-soft);
@@ -95,9 +96,9 @@
   place-items: center;
   transform: scale(1);
   transition:
-    opacity 1000ms cubic-bezier(.2, .75, .2, 1),
-    transform 1000ms cubic-bezier(.2, .75, .2, 1),
-    background-color 1000ms ease;
+    opacity 650ms cubic-bezier(.2, .75, .2, 1),
+    transform 650ms cubic-bezier(.2, .75, .2, 1),
+    background-color 650ms ease;
 }
 
 .nav-disclosure.is-open .nav-menu-toggle {
@@ -118,8 +119,8 @@
   pointer-events: none;
   transform: translateX(.55rem) scale(.99);
   transition:
-    opacity 1000ms cubic-bezier(.2, .75, .2, 1),
-    transform 1000ms cubic-bezier(.2, .75, .2, 1);
+    opacity 650ms cubic-bezier(.2, .75, .2, 1),
+    transform 650ms cubic-bezier(.2, .75, .2, 1);
 }
 
 .nav-disclosure.is-open .navbar-links {
@@ -134,8 +135,8 @@
   min-width: 0;
   padding: .24rem;
   align-items: center;
-  justify-content: flex-end;
-  gap: .12rem;
+  justify-content: space-between;
+  gap: 0;
 }
 .nav-button {
   padding: .48rem .66rem;
@@ -160,6 +161,7 @@
 }
 
 @media (max-width: 1050px) {
+  .nav-disclosure { --nav-expanded-width: 34rem; }
   .nav-button { padding: .58rem .5rem; font-size: .61rem !important; }
 }
 
@@ -177,11 +179,11 @@
     margin: 0;
     align-items: start;
     transition:
-      width 1000ms cubic-bezier(.2, .75, .2, 1),
-      max-height 1000ms cubic-bezier(.2, .75, .2, 1),
-      border-radius 1000ms cubic-bezier(.2, .75, .2, 1),
-      background-color 1000ms ease,
-      box-shadow 1000ms ease;
+      width 650ms cubic-bezier(.2, .75, .2, 1),
+      max-height 650ms cubic-bezier(.2, .75, .2, 1),
+      border-radius 650ms cubic-bezier(.2, .75, .2, 1),
+      background-color 650ms ease,
+      box-shadow 650ms ease;
   }
 
   .nav-disclosure.is-open {
