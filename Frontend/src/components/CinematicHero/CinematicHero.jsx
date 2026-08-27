@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ArrowDownRight } from 'lucide-react';
 import './CinematicHero.css';
 
@@ -111,6 +111,24 @@ const shouldShowWelcome = () => {
 const CinematicHero = ({ onJoin }) => {
   const [showWelcome, setShowWelcome] = useState(shouldShowWelcome);
 
+  useLayoutEffect(() => {
+    const bootstrap = document.getElementById('welcome-bootstrap');
+    document.documentElement.classList.add('welcome-app-ready');
+
+    if (!bootstrap) return undefined;
+
+    const handoff = () => {
+      bootstrap.classList.add('is-handoff');
+      window.setTimeout(() => bootstrap.remove(), 220);
+    };
+    const frame = window.requestAnimationFrame?.(handoff) ?? window.setTimeout(handoff, 0);
+
+    return () => {
+      if (window.cancelAnimationFrame) window.cancelAnimationFrame(frame);
+      else window.clearTimeout(frame);
+    };
+  }, []);
+
   useEffect(() => {
     if (!showWelcome) return undefined;
 
@@ -136,7 +154,6 @@ const CinematicHero = ({ onJoin }) => {
     <>
       {showWelcome && (
         <div className="welcome-sequence" role="status" aria-label="Welcome to Chips and Bytes">
-          <div className="welcome-sequence__rule" aria-hidden="true" />
           <p>Welcome to</p>
           <h1>Chips <span>&amp;</span> Bytes</h1>
           <div className="welcome-sequence__index" aria-hidden="true">

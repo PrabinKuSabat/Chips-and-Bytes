@@ -20,6 +20,87 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+      /* This exists before React loads so the hero never flashes beneath its welcome screen. */
+      #welcome-bootstrap {
+        position: fixed;
+        inset: 0;
+        z-index: 5000;
+        display: grid;
+        place-content: center;
+        padding: 2rem;
+        overflow: hidden;
+        color: #101112;
+        background: #fff;
+        text-align: center;
+        transition: opacity 180ms ease, visibility 0s linear 180ms;
+      }
+
+      #welcome-bootstrap p {
+        margin: 0 0 .35rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: clamp(.66rem, 1vw, .78rem);
+        font-weight: 500;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+
+      #welcome-bootstrap h1 {
+        margin: 0;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(3.2rem, 9vw, 8.8rem);
+        font-weight: 520;
+        letter-spacing: -.085em;
+        line-height: .9;
+      }
+
+      #welcome-bootstrap h1 span {
+        font-family: 'Instrument Serif', Georgia, serif;
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .welcome-bootstrap__identity {
+        position: absolute;
+        right: 1.5rem;
+        bottom: clamp(2rem, 4vw, 3.2rem);
+        left: 1.5rem;
+        display: flex;
+        justify-content: center;
+        gap: clamp(2.5rem, 7vw, 6.5rem);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: clamp(.68rem, 1.15vw, .94rem);
+        font-weight: 500;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      html:not(.welcome-bootstrap--seen) #root { visibility: hidden; }
+      html.welcome-bootstrap--seen #welcome-bootstrap { display: none; }
+      html.welcome-app-ready #root { visibility: visible; }
+      #welcome-bootstrap.is-handoff { opacity: 0; visibility: hidden; }
+
+      @media (max-width: 520px) {
+        .welcome-bootstrap__identity {
+          flex-direction: column;
+          gap: .5rem;
+          font-size: .64rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #welcome-bootstrap { transition-duration: 1ms; }
+      }
+    </style>
+    <script>
+      try {
+        if (window.location.pathname !== '/' || window.sessionStorage.getItem('chips-and-bytes:welcome-seen') === 'true') {
+          document.documentElement.classList.add('welcome-bootstrap--seen');
+        }
+      } catch (_) {
+        // Keep the welcome visible when browser storage is unavailable.
+      }
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -33,6 +114,14 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="welcome-bootstrap" role="status" aria-label="Welcome to Chips and Bytes">
+      <p>Welcome to</p>
+      <h1>Chips <span>&amp;</span> Bytes</h1>
+      <div class="welcome-bootstrap__identity">
+        <span>SSSIHL</span>
+        <span>Computer Architecture Club</span>
+      </div>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.

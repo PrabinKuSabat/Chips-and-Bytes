@@ -27,7 +27,7 @@
   ],
   "tokenFiles": ["Frontend/src/theme.css"],
   "rawColorAllowlist": [],
-  "localStyleBlockAllowlist": [],
+  "localStyleBlockAllowlist": ["Frontend/public/index.html"],
   "nestedVerticalScrollAllowlist": [],
   "fixedViewportHeightAllowlist": [],
   "globalScrollInterceptionAllowlist": ["scripts/ai-architecture-check.mjs"],
@@ -79,6 +79,7 @@
   "notes": [
     "Audit mode is intentional because this repository has legacy component CSS and generated build output.",
     "Frontend/build is ignored by the guard and must never be edited as source.",
+    "Frontend/public/index.html contains the minimal first-paint welcome gate required to prevent the React welcome overlay flashing after the homepage becomes visible.",
     "Move to enforce only in a later reviewed PR after baselining and resolving findings."
   ]
 }

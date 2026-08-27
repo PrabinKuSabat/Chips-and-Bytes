@@ -28,6 +28,8 @@ beforeEach(() => {
     })),
   });
   window.sessionStorage.clear();
+  document.documentElement.classList.remove('welcome-app-ready');
+  document.getElementById('welcome-bootstrap')?.remove();
 });
 
 test('preserves the original club writing', () => {
@@ -141,6 +143,9 @@ test('shows only the current dated news edition with numbered headings and readi
 });
 
 test('opens with the requested welcome and retains the original hero copy', () => {
+  const bootstrap = document.createElement('div');
+  bootstrap.id = 'welcome-bootstrap';
+  document.body.appendChild(bootstrap);
   const { container, unmount } = render(<CinematicHero onJoin={jest.fn()} />);
 
   expect(screen.getByRole('status', { name: 'Welcome to Chips and Bytes' })).toBeInTheDocument();
@@ -170,6 +175,8 @@ test('opens with the requested welcome and retains the original hero copy', () =
   });
   expect(screen.queryByText('Microprocessors')).not.toBeInTheDocument();
   expect(screen.queryByText(/Hardware:/i)).not.toBeInTheDocument();
+  expect(container.querySelector('.welcome-sequence__rule')).not.toBeInTheDocument();
+  expect(document.documentElement).toHaveClass('welcome-app-ready');
   unmount();
 });
 

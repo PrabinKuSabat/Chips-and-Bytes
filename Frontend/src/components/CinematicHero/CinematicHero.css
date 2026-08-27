@@ -16,28 +16,6 @@ body.welcome-is-playing {
   animation: welcome-curtain 2.9s cubic-bezier(.76, 0, .24, 1) both;
 }
 
-.welcome-sequence::before,
-.welcome-sequence::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: rgba(16, 17, 18, .12);
-}
-
-.welcome-sequence::before { left: 7vw; }
-.welcome-sequence::after { right: 7vw; }
-
-.welcome-sequence__rule {
-  width: 3.2rem;
-  height: 2px;
-  margin: 0 auto 1.4rem;
-  background: #101112;
-  transform-origin: left;
-  animation: welcome-rule 1s cubic-bezier(.2, .8, .2, 1) .15s both;
-}
-
 .welcome-sequence p {
   margin: 0 0 .35rem;
   font-family: 'IBM Plex Mono', monospace;
@@ -66,15 +44,16 @@ body.welcome-is-playing {
 
 .welcome-sequence__index {
   position: absolute;
-  right: 7vw;
-  bottom: 2.4rem;
-  left: 7vw;
+  right: 1.5rem;
+  bottom: clamp(2rem, 4vw, 3.2rem);
+  left: 1.5rem;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: center;
+  gap: clamp(2.5rem, 7vw, 6.5rem);
   font-family: 'IBM Plex Mono', monospace;
-  font-size: .58rem;
-  letter-spacing: .11em;
+  font-size: clamp(.68rem, 1.15vw, .94rem);
+  font-weight: 500;
+  letter-spacing: .12em;
   text-transform: uppercase;
   animation: welcome-text .8s ease .55s both;
 }
@@ -215,11 +194,6 @@ body.welcome-is-playing {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes welcome-rule {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
 @keyframes welcome-curtain {
   0%, 70% { transform: translateY(0); }
   100% { transform: translateY(-100%); }
@@ -237,8 +211,11 @@ body.welcome-is-playing {
 }
 
 @media (max-width: 760px) {
-  .welcome-sequence__index span:last-child { display: none; }
-  .welcome-sequence__index { justify-content: center; }
+  .welcome-sequence__index {
+    flex-direction: column;
+    gap: .5rem;
+    font-size: .64rem;
+  }
 
   .cinematic-hero { min-height: max(40rem, 100svh); }
   .cinematic-hero__copy { bottom: 3.5rem; }
