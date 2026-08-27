@@ -38,20 +38,24 @@
 
       #welcome-bootstrap p {
         margin: 0 0 .35rem;
+        opacity: 0;
         font-family: 'IBM Plex Mono', monospace;
         font-size: clamp(.66rem, 1vw, .78rem);
         font-weight: 500;
         letter-spacing: .18em;
         text-transform: uppercase;
+        transform: translateY(1rem);
       }
 
       #welcome-bootstrap h1 {
         margin: 0;
+        opacity: 0;
         font-family: 'Space Grotesk', sans-serif;
         font-size: clamp(3.2rem, 9vw, 8.8rem);
         font-weight: 520;
         letter-spacing: -.085em;
         line-height: .9;
+        transform: translateY(1rem);
       }
 
       #welcome-bootstrap h1 span {
@@ -73,6 +77,8 @@
         font-weight: 500;
         letter-spacing: .12em;
         text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(1rem);
       }
 
       html:not(.welcome-bootstrap--seen) #root { visibility: hidden; }
