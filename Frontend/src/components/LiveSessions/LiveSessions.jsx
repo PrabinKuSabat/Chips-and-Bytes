@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, CalendarClock, Radio } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarClock } from 'lucide-react';
 import './LiveSessions.css';
 
 const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
@@ -40,15 +40,13 @@ const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
 
   return (
     <section className="live-sessions" aria-labelledby="live-sessions-heading">
-      <div className="live-sessions__ambient" aria-hidden="true" />
       <header className="live-sessions__header">
         <div>
-          <p className="live-sessions__eyebrow"><Radio size={13} /> Club signal</p>
-          <h2 id="live-sessions-heading">Live Sessions</h2>
+          <p className="live-sessions__eyebrow">Next on the calendar</p>
+          <h2 id="live-sessions-heading">Upcoming Sessions</h2>
         </div>
         <div className="live-sessions__state" aria-live="polite">
-          <span className="live-sessions__pulse" aria-hidden="true" />
-          {isRefreshing ? 'Syncing schedule' : `${items.length} ${items.length === 1 ? 'session' : 'sessions'}`}
+          {isRefreshing ? 'Refreshing schedule' : `${items.length} ${items.length === 1 ? 'scheduled session' : 'scheduled sessions'}`}
         </div>
       </header>
 
@@ -68,7 +66,7 @@ const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
                 <div className="live-session-card__number">{String(index + 1).padStart(2, '0')}</div>
                 <CalendarClock size={26} strokeWidth={1.45} aria-hidden="true" />
                 <p>{session.text}</p>
-                <span>Upcoming club session</span>
+                <span>Scheduled session</span>
               </article>
             ))}
           </div>
