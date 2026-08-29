@@ -121,6 +121,27 @@ h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
   text-align: left !important;
 }
 
+.section-heading {
+  display: flex;
+  width: min(100%, 48rem);
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+}
+
+.section-heading .tab-heading,
+.section-heading .tab-member-heading,
+.section-heading .tab-mentor-heading {
+  margin: 0 0 .85rem !important;
+}
+
+.section-heading .tab-desc,
+.section-heading .tab-member-desc,
+.section-heading .tab-mentor-desc {
+  margin: 0 !important;
+}
+
 .about-page, .global-page {
   max-width: 75rem;
   padding: clamp(1.5rem, 4vw, 3.5rem) !important;

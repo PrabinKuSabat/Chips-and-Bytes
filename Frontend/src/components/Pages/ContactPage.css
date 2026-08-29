@@ -12,17 +12,6 @@
   grid-template-columns: minmax(0, 1.2fr) minmax(17rem, .8fr);
 }
 
-.contact-page__eyebrow {
-  margin: 0 !important;
-  color: var(--signal) !important;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: .64rem !important;
-  font-weight: 600;
-  letter-spacing: .11em;
-  text-transform: uppercase;
-  grid-column: 1 / -1;
-}
-
 .contact-page h1 {
   margin: 0;
   color: var(--ink);

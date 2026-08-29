@@ -11,12 +11,6 @@ const getLocalDateKey = () => {
   return `${year}-${month}-${day}`;
 };
 
-const formatDate = (dateKey) => new Date(`${dateKey}T00:00:00`).toLocaleDateString(undefined, {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-});
-
 const NewsPage = () => {
   const today = getLocalDateKey();
   const newsVersion = localStorage.getItem('chips-and-bytes:news-version') || '0';
@@ -28,13 +22,10 @@ const NewsPage = () => {
 
   return (
     <section className="news-page" aria-labelledby="news-heading">
-      <div className="news-page__header">
-        <div>
-          <p className="news-page__date">{formatDate(today)}</p>
-          <h1 id="news-heading" className="tab-heading">News</h1>
-        </div>
+      <header className="section-heading">
+        <h1 id="news-heading" className="tab-heading">News</h1>
         <p className="tab-desc">Today’s concise briefing on computer architecture, processors, AI systems, and the ideas shaping them.</p>
-      </div>
+      </header>
 
       {items.length > 0 ? (
         <>

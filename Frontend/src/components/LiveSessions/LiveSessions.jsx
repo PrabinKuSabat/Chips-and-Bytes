@@ -62,15 +62,13 @@ const LiveSessions = ({ sessions = [], isRefreshing = false }) => {
   };
 
   return (
-    <section className="live-sessions" aria-labelledby="live-sessions-heading">
+    <section
+      className="live-sessions"
+      aria-labelledby="live-sessions-heading"
+      aria-busy={isRefreshing}
+    >
       <header className="live-sessions__header">
-        <div>
-          <p className="live-sessions__eyebrow">Next on the calendar</p>
-          <h2 id="live-sessions-heading">Upcoming Sessions</h2>
-        </div>
-        <div className="live-sessions__state" aria-live="polite">
-          {isRefreshing ? 'Refreshing schedule' : `${items.length} ${items.length === 1 ? 'scheduled session' : 'scheduled sessions'}`}
-        </div>
+        <h2 id="live-sessions-heading">Next on the calendar</h2>
       </header>
 
       {items.length > 0 ? (

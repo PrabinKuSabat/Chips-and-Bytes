@@ -11,28 +11,15 @@
 }
 
 .live-sessions__header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
   margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
 }
 
-.live-sessions__eyebrow,
-.live-sessions__state,
 .live-session-card__number,
 .live-session-card__label,
 .live-session-card__details dt,
 .live-sessions__controls {
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
-}
-
-.live-sessions__eyebrow {
-  margin: 0 0 .6rem;
-  color: var(--signal);
-  font-size: .62rem;
-  letter-spacing: .11em;
 }
 
 .live-sessions h2 {
@@ -43,18 +30,6 @@
   font-weight: 500;
   letter-spacing: -.06em;
   line-height: .98;
-}
-
-.live-sessions__state {
-  display: flex;
-  align-items: center;
-  padding: .55rem .7rem;
-  color: var(--ink-muted);
-  background: var(--surface-subtle);
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  font-size: .6rem;
-  letter-spacing: .09em;
 }
 
 .live-sessions__rail {
@@ -213,7 +188,6 @@
 }
 
 @media (max-width: 700px) {
-  .live-sessions__header { align-items: flex-start; flex-direction: column; }
   .live-session-card { flex-basis: 90%; min-height: 15rem; }
   .live-session-card h3 { font-size: 1.28rem; }
   .live-session-card__details { gap: .35rem .7rem; }

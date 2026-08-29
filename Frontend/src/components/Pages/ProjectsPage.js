@@ -138,10 +138,12 @@ const ProjectsPage = () => {
 
   return (
     <div className="Projects-page">
-      <h1 className="tab-heading">Projects</h1>
-      <p className="tab-desc">
-        Explore projects built by our community members.
-      </p>
+      <header className="section-heading">
+        <h1 className="tab-heading">Projects</h1>
+        <p className="tab-desc">
+          Explore projects built by our community members.
+        </p>
+      </header>
 
       <>
           <div className="carousel-wrapper">

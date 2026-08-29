@@ -80,6 +80,7 @@ test('keeps the contact panel focused on the club identity', () => {
   render(<ContactPage />);
 
   expect(screen.getByRole('img', { name: 'Chips & Bytes' })).toHaveAttribute('src', '/assets/logo_white_full.png');
+  expect(screen.queryByText(/Open channel/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Start a conversation/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Build, study and think architecture together/i)).not.toBeInTheDocument();
 });
@@ -185,9 +186,10 @@ test('shows only the current dated news edition with numbered headings and readi
     ],
   }));
 
-  render(<NewsPage />);
+  const { container } = render(<NewsPage />);
 
   expect(screen.getByRole('heading', { name: 'News' })).toBeInTheDocument();
+  expect(container.querySelector('.news-page__date')).not.toBeInTheDocument();
   expect(screen.getByText('01')).toBeInTheDocument();
   expect(screen.getByText('02')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'A new processor arrives' })).toBeInTheDocument();
@@ -257,8 +259,8 @@ test('keeps multiple structured sessions individually readable and navigable', (
     />,
   );
 
-  expect(screen.getByRole('heading', { name: 'Upcoming Sessions' })).toBeInTheDocument();
-  expect(screen.getByText('Next on the calendar')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Next on the calendar' })).toBeInTheDocument();
+  expect(screen.queryByText('2 scheduled sessions')).not.toBeInTheDocument();
   expect(screen.getByText('Think Architecture Together S1')).toBeInTheDocument();
   expect(screen.getByText('QEMU Lab: Tracing a Boot Sequence')).toBeInTheDocument();
   expect(screen.getByText('1st Mtech Lab')).toBeInTheDocument();

@@ -112,10 +112,12 @@ const BlogsPage = () => {
 
   return (
     <div className="blogs-page">
-      <h1 className="tab-heading">Blogs</h1>
-      <p className="tab-desc">
-        Read articles and tutorials written by our community members.
-      </p>
+      <header className="section-heading">
+        <h1 className="tab-heading">Blogs</h1>
+        <p className="tab-desc">
+          Read articles and tutorials written by our community members.
+        </p>
+      </header>
       {isRefreshing && <p className="content-refresh-status blog-cache-status">Refreshing article previews in the background…</p>}
 
       <>

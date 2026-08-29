@@ -70,10 +70,12 @@ const Mentors = () => {
 
   return (
     <div className="mentors-mentor-page">
-      <h1 className="tab-mentor-heading">Mentors</h1>
-      <p className="tab-mentor-desc">
-        Meet our mentors who guide and inspire us in our journey.
-      </p>
+      <header className="section-heading">
+        <h1 className="tab-mentor-heading">Mentors</h1>
+        <p className="tab-mentor-desc">
+          Meet our mentors who guide and inspire us in our journey.
+        </p>
+      </header>
       <div className="mentors-mentor-carousel-wrapper">
         {canScrollLeft && (
           <button

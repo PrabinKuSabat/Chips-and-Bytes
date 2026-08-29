@@ -70,10 +70,12 @@ const MembersPage = () => {
 
   return (
     <div className="members-member-page">
-      <h1 className="tab-member-heading">Members</h1>
-      <p className="tab-member-desc">
-        Meet our members who are part of this club.
-      </p>
+      <header className="section-heading">
+        <h1 className="tab-member-heading">Members</h1>
+        <p className="tab-member-desc">
+          Meet our members who are part of this club.
+        </p>
+      </header>
       <div className="members-member-carousel-wrapper">
         {canScrollLeft && (
           <button

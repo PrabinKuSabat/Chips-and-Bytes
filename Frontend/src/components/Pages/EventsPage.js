@@ -31,8 +31,10 @@ const EventsPage = () => {
 
   return (
     <>
-      <h1 className="tab-heading">Events</h1>
-      <p className="tab-desc">Join our upcoming workshops, hackathons, and seminars.</p>
+      <header className="section-heading">
+        <h1 className="tab-heading">Events</h1>
+        <p className="tab-desc">Join our upcoming workshops, hackathons, and seminars.</p>
+      </header>
 
       {scheduledEvents.length === 0 ? (
         <p>No events found.</p>
