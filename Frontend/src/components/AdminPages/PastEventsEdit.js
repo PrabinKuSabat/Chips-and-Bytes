@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import './EventEdit.css'; // reuse styles
+import './PastEventsEdit.css';
 
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/pastevents`;
 
@@ -100,121 +100,124 @@ const PastEventsEdit = () => {
   };
 
   return (
-    <main className="admin-editor event-edit-page">
-      <h1>Edit Past Events</h1>
-      <form className="event-form" onSubmit={handleSubmit}>
-        <input name="date" type="date" value={formData.date} onChange={handleChange} required />
-        <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-        <input name="reportLink" placeholder="Report Link" value={formData.reportLink} onChange={handleChange} />
-        <input name="resourcesLink" placeholder="Resources Link" value={formData.resourcesLink} onChange={handleChange} />
-        <button type="submit">{editingId ? 'Update' : 'Add'} Past Event</button>
+    <main className="admin-editor past-events-edit-page">
+      <header className="admin-editor__header">
+        <p>Past events archive</p>
+        <h1>{editingId ? 'Update archived event' : 'Add a completed event'}</h1>
+        <span>Maintain the public archive and attach reports or learning resources whenever they become available.</span>
+      </header>
+      <form className="event-form past-event-form" onSubmit={handleSubmit}>
+        <div className="past-event-form__grid">
+          <label>
+            Event date
+            <input name="date" type="date" value={formData.date} onChange={handleChange} required />
+          </label>
+          <label>
+            Event title
+            <input name="title" placeholder="Completed event title" value={formData.title} onChange={handleChange} required />
+          </label>
+          <label>
+            Report link
+            <input name="reportLink" placeholder="https://…" value={formData.reportLink} onChange={handleChange} />
+          </label>
+          <label>
+            Resources link
+            <input name="resourcesLink" placeholder="https://…" value={formData.resourcesLink} onChange={handleChange} />
+          </label>
+        </div>
+        <div className="past-event-form__actions">
+          <button type="submit">{editingId ? 'Update archived event' : 'Add to archive'}</button>
+        </div>
       </form>
-      <div className="table-wrapper">
-        <div className="table-container">
-          <table className="events-table">
+      <section className="past-events-list" aria-labelledby="past-events-list-heading">
+        <div className="past-events-list__heading">
+          <h2 id="past-events-list-heading">Archived events</h2>
+          <span>{events.length} total</span>
+        </div>
+        <div className="past-events-table-wrap" tabIndex="0" aria-label="Archived events table">
+          <table className="past-events-table">
+            <caption>Past events, reports, resources, and editing actions</caption>
             <thead>
-              <tr className="table-header">
-                <th className="table-cell header-cell">S.No</th>
-                <th className="table-cell header-cell">Date</th>
-                <th className="table-cell header-cell">Event Title</th>
-                <th className="table-cell header-cell">Report</th>
-                <th className="table-cell header-cell">Resources</th>
-                <th className="table-cell header-cell">Actions</th>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Date</th>
+                <th scope="col">Event title</th>
+                <th scope="col">Report</th>
+                <th scope="col">Resources</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
               {events.map((event, index) => (
-                <tr key={event._id} className="table-row">
-                  <td className="table-cell serial-cell">{index + 1}</td>
-                  <td className="table-cell date-cell">{event.date}</td>
-                  <td className="table-cell title-cell">{event.title}</td>
-                  <td className="table-cell link-cell">
+                <tr key={event._id}>
+                  <td>{String(index + 1).padStart(2, '0')}</td>
+                  <td>{event.date}</td>
+                  <td className="past-events-table__title">{event.title}</td>
+                  <td>
                     {event.reportLink ? (
                       <a
                         href={event.reportLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="drive-link report-link"
+                        className="past-event-link"
                         aria-label={`Report for ${event.title}`}
                       >
                         <FaExternalLinkAlt size={16} />
-                        Click here
+                        Open report
                       </a>
                     ) : (
                       <span className="pending-event-link">Yet to be added</span>
                     )}
                   </td>
-                  <td className="table-cell link-cell">
+                  <td>
                     {event.resourcesLink ? (
                       <a
                         href={event.resourcesLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="drive-link resources-link"
+                        className="past-event-link"
                         aria-label={`Resources for ${event.title}`}
                       >
                         <FaExternalLinkAlt size={16} />
-                        Click here
+                        Open resources
                       </a>
                     ) : (
                       <span className="pending-event-link">Yet to be added</span>
                     )}
                   </td>
-                  <td className="table-cell link-cell">
-                    <button
-                      style={{
-                        background: '#22d3ee',
-                        color: '#0f172a',
-                        border: 'none',
-                        padding: '0.4em 1.1em',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        fontSize: '0.98rem',
-                        cursor: 'pointer',
-                        marginRight: '0.5em',
-                        marginBottom: '0.2em',
-                        boxShadow: '0 2px 8px rgba(34, 211, 238, 0.08)',
-                        transition: 'background 0.2s, color 0.2s, box-shadow 0.2s'
-                      }}
-                      onMouseOver={e => { e.target.style.background = '#0ea5e9'; e.target.style.color = '#fff'; }}
-                      onMouseOut={e => { e.target.style.background = '#22d3ee'; e.target.style.color = '#0f172a'; }}
-                      onClick={() => handleEdit(event)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      style={{
-                        background: '#f87171',
-                        color: '#fff',
-                        border: 'none',
-                        padding: '0.4em 1.1em',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        fontSize: '0.98rem',
-                        cursor: 'pointer',
-                        marginBottom: '0.2em',
-                        boxShadow: '0 2px 8px rgba(248, 113, 113, 0.08)',
-                        transition: 'background 0.2s, color 0.2s, box-shadow 0.2s'
-                      }}
-                      onMouseOver={e => { e.target.style.background = '#dc2626'; }}
-                      onMouseOut={e => { e.target.style.background = '#f87171'; }}
-                      onClick={() => handleDelete(event._id)}
-                    >
-                      Delete
-                    </button>
+                  <td>
+                    <div className="past-event-actions">
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(event)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="past-event-delete"
+                        onClick={() => handleDelete(event._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
+              {events.length === 0 && (
+                <tr>
+                  <td className="past-events-table__empty" colSpan="6">No past events have been added.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
       <button
         className="back-to-admin-btn"
-        style={{ marginTop: '2rem' }}
         onClick={() => navigate('/admin/dashboard')}
       >
-        Go Back to Admin Page
+        ← Admin dashboard
       </button>
     </main>
   );

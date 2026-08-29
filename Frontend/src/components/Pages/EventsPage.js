@@ -30,20 +30,24 @@ const EventsPage = () => {
   const scheduledEvents = getScheduledEvents(events);
 
   return (
-    <>
+    <section className="events-page" aria-labelledby="events-heading">
       <header className="section-heading">
-        <h1 className="tab-heading">Events</h1>
+        <h1 id="events-heading" className="tab-heading">Events</h1>
         <p className="tab-desc">Join our upcoming workshops, hackathons, and seminars.</p>
       </header>
 
       {scheduledEvents.length === 0 ? (
-        <p>No events found.</p>
+        <div className="events-empty-state" role="status">
+          <span>Schedule clear</span>
+          <h2>No upcoming events</h2>
+          <p>{error ? 'Showing the latest available schedule while the server reconnects.' : 'New sessions will appear here as soon as they are scheduled.'}</p>
+        </div>
       ) : (
         <div className="events-wrapper" aria-busy={isRefreshing}>
           {isRefreshing && <p className="content-refresh-status">Refreshing the latest event details…</p>}
           <div className="events-grid">
             {scheduledEvents.map((event) => (
-              <div className="event-card neon-glow" key={event._id}>
+              <article className="event-card" key={event._id}>
                 <div className="event-card-header">
                   <h2 className="event-title">{event.title}</h2>
                   <span className="event-speaker">by {event.speaker}</span>
@@ -58,20 +62,20 @@ const EventsPage = () => {
                   </div>
                   <p className="event-description">{event.description}</p>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       )}
 
-      {error && <p className="content-refresh-status">Showing the latest available event details while the server reconnects.</p>}
+      {error && scheduledEvents.length > 0 && <p className="content-refresh-status">Showing the latest available event details while the server reconnects.</p>}
 
       <div className="section-route">
         <Link to="/events/details" className="section-route__link">
           <span>View Past Events</span><span aria-hidden="true">↗</span>
         </Link>
       </div>
-    </>
+    </section>
   );
 };
 

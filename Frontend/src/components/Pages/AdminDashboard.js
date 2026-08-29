@@ -4,7 +4,7 @@ import './AdminDashboard.css';
 
 const destinations = [
   ['Announcements', 'Write clear public notices, links, and visibility states.', '/admin/announcement-edit'],
-  ['Upcoming sessions', 'Manage the title, speaker, date, time, venue, and description.', '/admin/event-edit'],
+  ['Upcoming events', 'Schedule events with their speaker, date, time, venue, and description.', '/admin/event-edit'],
   ['Past events', 'Maintain completed sessions and their reports or resources.', '/admin/past-events-edit'],
   ['Daily news', 'Add ordered headlines, summaries, and full reading notes by date.', '/admin/news-edit'],
 ];

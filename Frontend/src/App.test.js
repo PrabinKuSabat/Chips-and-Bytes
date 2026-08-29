@@ -3,6 +3,7 @@ import AboutPage from './components/Pages/AboutPage';
 import BlogCard from './components/BlogCard/BlogCard';
 import CinematicHero from './components/CinematicHero/CinematicHero';
 import ContactPage from './components/Pages/ContactPage';
+import EventsPage from './components/Pages/EventsPage';
 import ProjectCard from './components/ProjectCard/ProjectCard';
 import LiveSessions from './components/LiveSessions/LiveSessions';
 import Navbar from './components/Navbar/Navbar';
@@ -28,6 +29,7 @@ beforeEach(() => {
     })),
   });
   window.sessionStorage.clear();
+  window.localStorage.clear();
   document.documentElement.classList.remove('welcome-app-ready');
   document.getElementById('welcome-bootstrap')?.remove();
 });
@@ -195,6 +197,15 @@ test('shows only the current dated news edition with numbered headings and readi
   expect(screen.getByRole('heading', { name: 'A new processor arrives' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /Read today’s complete note/i })).toHaveAttribute('href', `/news/${dateKey}`);
   expect(screen.getByRole('link', { name: /Browse all news/i })).toHaveAttribute('href', '/news');
+});
+
+test('keeps the events heading on the shared left-aligned section axis', () => {
+  const { container } = render(<EventsPage />);
+
+  const heading = screen.getByRole('heading', { name: 'Events' });
+  expect(heading).toBeInTheDocument();
+  expect(container.querySelector('.events-page > .section-heading')).toContainElement(heading);
+  expect(screen.getByText('Join our upcoming workshops, hackathons, and seminars.')).toBeInTheDocument();
 });
 
 test('opens with the requested welcome and retains the original hero copy', () => {

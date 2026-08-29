@@ -161,59 +161,83 @@ const EventEdit = () => {
 
   return (
     <main className="admin-editor event-edit-page">
-      <h1>Edit Events</h1>
-      {error && <p className="error">{error}</p>}
-      {loading && <p>Loading events...</p>}
+      <header className="admin-editor__header">
+        <p>Upcoming events</p>
+        <h1>{editingId ? 'Update event' : 'Schedule an event'}</h1>
+        <span>Add the complete schedule once. The nearest event becomes “Next on the calendar,” while every future event remains visible in Events.</span>
+      </header>
+      {error && <p className="admin-event-status admin-event-status--error" role="alert">{error}</p>}
+      {loading && <p className="admin-event-status" role="status">Loading events…</p>}
 
       {!loading && !error && (
         <>
           <form className="event-form" onSubmit={handleSubmit}>
-            <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
-            <input name="speaker" placeholder="Speaker" value={formData.speaker} onChange={handleChange} required />
-            <input name="date" type="date" value={formData.date} onChange={handleChange} required />
-            <input name="time" type="time" value={formData.time} onChange={handleChange} required />
-            <input name="location" placeholder="Location" value={formData.location} onChange={handleChange} required />
-            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
-            <button type="submit">{editingId ? 'Update' : 'Add'} Event</button>
+            <div className="event-form__grid">
+              <label>
+                Event title
+                <input name="title" placeholder="Think Architecture Together" value={formData.title} onChange={handleChange} required />
+              </label>
+              <label>
+                Speaker
+                <input name="speaker" placeholder="Speaker or facilitator" value={formData.speaker} onChange={handleChange} required />
+              </label>
+              <label>
+                Date
+                <input name="date" type="date" value={formData.date} onChange={handleChange} required />
+              </label>
+              <label>
+                Time
+                <input name="time" type="time" value={formData.time} onChange={handleChange} required />
+              </label>
+              <label className="event-form__wide-field">
+                Venue
+                <input name="location" placeholder="Room or online destination" value={formData.location} onChange={handleChange} required />
+              </label>
+              <label className="event-form__wide-field">
+                Description
+                <textarea name="description" rows="5" placeholder="What will participants study or build?" value={formData.description} onChange={handleChange} required />
+              </label>
+            </div>
+            <div className="event-form__actions">
+              <button type="submit">{editingId ? 'Update event' : 'Schedule event'}</button>
+            </div>
           </form>
 
-          {events.length === 0 ? (
-            <p>No events found.</p>
-          ) : (
-            <div className="events-wrapper">
-              <div className="events-grid">
+          <section className="admin-event-list" aria-labelledby="scheduled-events-heading">
+            <div className="admin-event-list__heading">
+              <h2 id="scheduled-events-heading">Scheduled events</h2>
+              <span>{events.length} total</span>
+            </div>
+            {events.length === 0 ? (
+              <p className="admin-event-status">No events have been scheduled.</p>
+            ) : (
+              <div className="admin-event-grid">
                 {events.map(event => (
-                  <div className="event-card neon-glow" key={event._id}>
-                    <div className="event-card-header">
-                      <h2 className="event-title">{event.title}</h2>
-                      <span className="event-speaker">by {event.speaker}</span>
+                  <article className="admin-event-card" key={event._id}>
+                    <div className="admin-event-card__header">
+                      <span>{new Date(event.date).toISOString().slice(0, 10)}</span>
+                      <span>{event.time}</span>
                     </div>
-                    <div className="event-card-body">
-                      <div className="event-meta">
-                        <span className="event-date">🗓️ {new Date(event.date).toISOString().slice(0, 10)}</span>
-                        <span className="event-time">🕒 {event.time}</span>
-                        <span className="event-location">📍 {event.location}</span>
-                      </div>
-                      <p className="event-description">{event.description}</p>
-                      <div className="admin-actions">
-                        <button type="button" onClick={() => handleEdit(event)}>Edit</button>
-                        <button type="button" onClick={() => handleArchive(event)}>Archive</button>
-                        <button type="button" onClick={() => handleDelete(event._id)}>Delete</button>
-                      </div>
+                    <h3>{event.title}</h3>
+                    <p className="admin-event-card__speaker">{event.speaker} · {event.location}</p>
+                    <p className="admin-event-card__description">{event.description}</p>
+                    <div className="admin-event-card__actions">
+                      <button type="button" onClick={() => handleEdit(event)}>Edit</button>
+                      <button type="button" className="admin-event-action--archive" onClick={() => handleArchive(event)}>Archive</button>
+                      <button type="button" className="admin-event-action--danger" onClick={() => handleDelete(event._id)}>Delete</button>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </section>
         </>
       )}
       <button
         className="back-to-admin-btn"
-        style={{ marginTop: '2rem' }}
         onClick={() => navigate('/admin/dashboard')}
       >
-        Go Back to Admin Page
+        ← Admin dashboard
       </button>
     </main>
   );

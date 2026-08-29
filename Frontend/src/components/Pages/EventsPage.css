@@ -1,206 +1,162 @@
 .events-page {
-  max-width: 1200px; /* was 900px */
-  margin: 80px auto 0 auto;
-  padding: 2rem;
-  background: rgba(30, 64, 175, 0.1); /* light blue tint */
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(30, 64, 175, 0.08);
-  color: #fff;
+  width: 100%;
+  color: var(--ink);
 }
 
-.events-page h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #3b82f6; /* Tailwind blue-500 */
-}
-
-.read-more-container {
-  text-align: center;
-  margin-top: clamp(1.5rem, 4vw, 2rem);
-}
-
-/* Refined blue-themed event announcement */
-.event-announcement {
-  background: rgba(30, 64, 175, 0.15);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 24px 18px;
-  width: 320px;
-  max-width: 90vw;
-  box-sizing: border-box;
-  transition: transform 0.2s;
-  position: relative;
-  z-index: 1;
-}
-
-.event-announcement:hover {
-  transform: translateY(-4px) scale(1.03);
-}
-
-.event-title {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: 1.2rem;
-  color: #ffffff;
-}
-
-.event-details {
-  font-size: 1rem;
-  color: #ffffff;
+.events-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
-@media (max-width: 600px) {
-  .events-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+  margin: 0;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
 }
 
 .event-card {
-  background: rgba(19, 31, 56, 0.95);
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 32px rgba(34, 211, 238, 0.08), 0 1.5px 8px rgba(139, 92, 246, 0.12);
-  padding: 2rem 1.5rem;
-  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);
-  border: 2px solid transparent;
   position: relative;
-  overflow: hidden;
-  padding-left: 1.5rem; /* add space for the line */
-  max-width: 420px;
   width: 100%;
-  margin: 0 auto;
+  min-height: 22rem;
+  margin: 0;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-soft);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .event-card::before {
-  content: "";
   position: absolute;
+  top: 1.4rem;
+  bottom: 1.4rem;
   left: 0;
-  top: 1.25rem;
-  bottom: 1.25rem;
-  width: 6px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #3b82f6 0%, #22d3ee 100%);
-  box-shadow: 0 0 8px 2px #22d3ee55;
-  transition: box-shadow 0.2s;
+  width: .24rem;
+  background: var(--signal);
+  border-radius: 0 99px 99px 0;
+  content: '';
 }
 
-.event-card.neon-glow:hover::before,
-.event-card.neon-glow:focus-within::before {
-  box-shadow: 0 0 16px 4px #22d3eecc;
+.event-card:hover,
+.event-card:focus-within {
+  border-color: var(--signal);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-.2rem);
 }
 
 .event-card-header {
   display: flex;
-  flex-direction: column;
+  margin-bottom: 1.35rem;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: .45rem;
 }
 
 .event-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #22d3ee;
-  margin: 0 0 0.25rem 0;
-  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: -.045em;
+  line-height: 1.08;
 }
 
 .event-speaker {
-  font-size: 1rem;
-  color: #2b94da;
-  font-weight: 700;
+  color: var(--signal);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .67rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
 .event-card-body {
-  margin-top: 0.5rem;
+  display: flex;
+  min-height: 14rem;
+  flex-direction: column;
 }
 
 .event-meta {
-  display: block;
-  font-size: 1rem !important;
-  margin-bottom: 0.75rem;
-  color: #cbd5e1;
+  display: grid;
+  margin-bottom: 1.25rem;
+  color: var(--ink-muted);
+  gap: .55rem;
 }
 
-.event-date, .event-time, .event-location {
-  margin-right: 0;
+.event-date,
+.event-time,
+.event-location {
   display: block;
-  background: none;
-  border-radius: 0;
+  margin: 0;
   padding: 0;
-  font-weight: 700;
-  color: #fff;
-  font-size: 0.98rem;
+  color: var(--ink-muted);
+  background: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .035em;
+  line-height: 1.45;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: .75em !important;
 }
 
 .event-description {
-  color: #e0e7ff;
-  font-size: 1.05rem;
-  margin-top: 0.5rem;
-  line-height: 1.6;
+  margin: auto 0 0;
+  color: var(--ink-muted);
+  font-size: .96rem;
+  line-height: 1.7;
 }
 
-/* Neon Glow Hover Effect */
-.event-card.neon-glow:hover, .event-card.neon-glow:focus-within {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow:
-    0 0 24px 4px #22d3ee,
-    0 8px 32px rgba(139, 92, 246, 0.18),
-    0 2px 8px rgba(34, 211, 238, 0.18);
-  border-color: #22d3ee;
-  z-index: 2;
+.events-empty-state {
+  display: grid;
+  width: min(100%, 42rem);
+  padding: clamp(1.35rem, 3vw, 2rem);
+  color: var(--ink);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-soft);
+  border-left: .24rem solid var(--signal);
+  border-radius: .85rem;
+  box-shadow: var(--shadow-soft);
+  gap: .65rem;
+  text-align: left;
 }
 
-/* Responsive tweaks */
+.events-empty-state span {
+  color: var(--signal);
+  font: 600 .64rem/1 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.events-empty-state h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -.045em;
+}
+
+.events-empty-state p,
+.events-page .content-refresh-status {
+  margin: 0;
+  color: var(--ink-muted);
+  line-height: 1.65;
+  text-align: left;
+}
+
+.events-page .content-refresh-status {
+  margin-bottom: 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .67rem;
+  letter-spacing: .035em;
+}
+
 @media (max-width: 600px) {
-  .event-card {
-    padding: 1.25rem 0.75rem;
-  }
-  .event-title {
-    font-size: 1.15rem;
-  }
-  .event-meta {
-    font-size: 0.95rem;
-  }
-}
-
-.events-wrapper {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.content-refresh-status {
-  margin: 0 0 0.75rem;
-  color: #a9bfd4;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-align: center;
-}
-
-/* Add to EventsPage.css or style.css */
-.spinner {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  border: 3px solid #38bff8;
-  border-radius: 50%;
-  border-top: 3px solid transparent;
-  animation: spin 0.8s linear infinite;
-  vertical-align: middle;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  .event-card { min-height: auto; }
+  .event-card-body { min-height: auto; }
+  .event-description { margin-top: 1rem; }
 }

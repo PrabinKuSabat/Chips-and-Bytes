@@ -125,6 +125,7 @@ h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
   display: flex;
   width: min(100%, 48rem);
   margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+  align-self: flex-start;
   align-items: flex-start;
   flex-direction: column;
   text-align: left;
@@ -175,7 +176,7 @@ h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
   box-shadow: 0 12px 28px rgba(23, 24, 20, .07) !important;
 }
 .event-card::before { background: var(--signal) !important; box-shadow: none !important; }
-.event-card:hover, .event-card.neon-glow:hover, .event-card.neon-glow:focus-within,
+.event-card:hover, .event-card:focus-within,
 .member-mentor-card:hover, .mentor-mentor-card:hover {
   border-color: rgba(224, 82, 44, .5) !important;
   box-shadow: var(--shadow-soft) !important;
@@ -298,6 +299,9 @@ h1, h2, h3, h4, .logo-title, .tab-heading, .about-us-heading, .subheading,
 /* Admin content tools share the public editorial palette while retaining the
    existing event, archive, and news editor structure. */
 .admin-editor { width: min(calc(100% - 2rem), 68rem); margin: clamp(6rem, 12vw, 9rem) auto 4rem; color: var(--ink); }
+.admin-editor__header { max-width: 48rem; margin-bottom: clamp(1.5rem, 4vw, 2.4rem); }
+.admin-editor__header > p { margin: 0 0 .75rem; color: var(--signal); font: 600 .66rem/1 'IBM Plex Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+.admin-editor__header > span { display: block; max-width: 42rem; color: var(--ink-muted); line-height: 1.7; }
 .admin-editor h1 { margin: 0 0 1.25rem; color: var(--ink); font-size: clamp(2rem, 5vw, 3.75rem); font-weight: 500; letter-spacing: -.065em; }
 .admin-editor .event-form, .admin-form, .news-edit-form { display: grid; gap: 1rem; padding: clamp(1.1rem, 3vw, 1.75rem); background: var(--surface-raised); border: 1px solid var(--line-soft); border-radius: 1rem; box-shadow: 0 12px 28px rgba(23, 24, 20, .07); }
 .admin-editor label, .admin-form label, .news-edit-form label { display: grid; gap: .45rem; color: var(--ink-muted); font-size: .78rem; font-weight: 700; }
