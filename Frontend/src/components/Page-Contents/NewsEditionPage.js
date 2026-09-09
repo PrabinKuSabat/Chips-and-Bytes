@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { usePublicResource } from '../../hooks/usePublicResource';
+import NewsContent from '../NewsContent/NewsContent';
 import './NewsDetailsPage.css';
 
 const formatDate = (dateKey) => new Date(`${dateKey}T00:00:00`).toLocaleDateString(undefined, {
@@ -45,7 +46,7 @@ const NewsEditionPage = () => {
               <div>
                 <h2>{item.heading}</h2>
                 <p className="news-note__summary">{item.summary}</p>
-                <div className="news-note__content">{item.content}</div>
+                <NewsContent className="news-note__content">{item.content}</NewsContent>
               </div>
             </li>
           ))}

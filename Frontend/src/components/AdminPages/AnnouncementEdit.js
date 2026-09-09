@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { invalidatePublicResource } from '../../hooks/usePublicResource';
 import './AnnouncementEdit.css';
 
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/announcements`;
@@ -32,9 +33,14 @@ const AnnouncementEdit = () => {
     event.preventDefault(); setSubmitting(true); setError('');
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      if (editingId) await axios.put(`${API_URL}/${editingId}`, form, config);
-      else await axios.post(API_URL, form, config);
-      resetForm(); await fetchAnnouncements();
+      const response = editingId
+        ? await axios.put(`${API_URL}/${editingId}`, form, config)
+        : await axios.post(API_URL, form, config);
+      setAnnouncements((current) => editingId
+        ? current.map((item) => item._id === editingId ? response.data : item)
+        : [response.data, ...current]);
+      invalidatePublicResource('announcements');
+      resetForm();
     } catch (requestError) { setError(requestError.response?.data?.message || 'Unable to save this announcement.'); }
     finally { setSubmitting(false); }
   };
@@ -44,8 +50,16 @@ const AnnouncementEdit = () => {
   };
   const handleDelete = async (item) => {
     if (!window.confirm(`Delete “${item.title || item.message || item.text}”?`)) return;
-    try { await axios.delete(`${API_URL}/${item._id}`, { headers: { Authorization: `Bearer ${token}` } }); if (editingId === item._id) resetForm(); await fetchAnnouncements(); }
-    catch { setError('Unable to delete this announcement.'); }
+    try {
+      await axios.delete(`${API_URL}/${item._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAnnouncements((current) => current.filter((candidate) => candidate._id !== item._id));
+      invalidatePublicResource('announcements');
+      if (editingId === item._id) resetForm();
+    } catch {
+      setError('Unable to delete this announcement.');
+    }
   };
   return <main className="admin-editor announcement-edit-page">
     <header className="admin-editor__header"><p>Public announcement editor</p><h1>{editingId ? 'Update announcement' : 'Add announcement'}</h1><span>Every field below maps directly to the announcement visitors see on the homepage.</span></header>

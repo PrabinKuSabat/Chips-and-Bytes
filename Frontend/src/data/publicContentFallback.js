@@ -2,15 +2,10 @@
  * Last-known public content bundled with the site. It lets the public pages
  * remain useful while the hosted API wakes up, then is replaced by fresh API
  * data in the background. Keep these records in sync when publishing a major
- * event or announcement.
+ * event or past-event record.
  */
 export const publicContentFallback = {
-  announcements: [
-    {
-      _id: 'fallback-announcement-think-architecture-together-s1',
-      text: 'Session titled "Think Architecture Together S1" on 22nd August 2026 at 3:10PM',
-    },
-  ],
+  announcements: [],
   events: [
     {
       _id: 'fallback-event-think-architecture-together-s1',

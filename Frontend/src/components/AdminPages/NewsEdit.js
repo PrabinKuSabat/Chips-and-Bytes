@@ -6,11 +6,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import MarkdownPasteTextarea from '../NewsContent/MarkdownPasteTextarea';
+import { invalidatePublicResource } from '../../hooks/usePublicResource';
 import './NewsEdit.css';
 
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/news`;
-const CACHE_PREFIX = 'chips-and-bytes:public-resource:';
 const NEWS_VERSION_KEY = 'chips-and-bytes:news-version';
+const sortNewsItems = (newsItems) => [...newsItems].sort((left, right) => (
+  right.dateKey.localeCompare(left.dateKey)
+  || (left.order || 1) - (right.order || 1)
+  || new Date(left.createdAt || 0) - new Date(right.createdAt || 0)
+));
 
 const getLocalDateKey = () => {
   const now = new Date();
@@ -62,10 +68,12 @@ const NewsEdit = () => {
     }));
   };
 
-  const invalidatePublicNews = (dateKey) => {
-    localStorage.removeItem(`${CACHE_PREFIX}news-${dateKey}`);
-    localStorage.removeItem(`${CACHE_PREFIX}news-edition-${dateKey}`);
-    localStorage.removeItem(`${CACHE_PREFIX}news-archive`);
+  const invalidatePublicNews = (...dateKeys) => {
+    new Set(dateKeys.filter(Boolean)).forEach((dateKey) => {
+      invalidatePublicResource(`news-${dateKey}`);
+      invalidatePublicResource(`news-edition-${dateKey}`);
+    });
+    invalidatePublicResource('news-archive');
     localStorage.setItem(NEWS_VERSION_KEY, String(Date.now()));
   };
 
@@ -80,18 +88,21 @@ const NewsEdit = () => {
     setError('');
 
     try {
-      if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, form, {
+      const previousDateKey = editingId
+        ? items.find((item) => item._id === editingId)?.dateKey
+        : null;
+      const response = editingId
+        ? await axios.put(`${API_URL}/${editingId}`, form, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        : await axios.post(API_URL, form, {
           headers: { Authorization: `Bearer ${token}` }
         });
-      } else {
-        await axios.post(API_URL, form, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      }
-      invalidatePublicNews(form.dateKey);
+      setItems((current) => editingId
+        ? sortNewsItems(current.map((item) => item._id === editingId ? response.data : item))
+        : sortNewsItems([...current, response.data]));
+      invalidatePublicNews(previousDateKey, response.data.dateKey);
       resetForm();
-      await fetchItems();
     } catch (requestError) {
       setError(requestError.response?.data?.message || 'Unable to save this news item.');
     } finally {
@@ -119,9 +130,9 @@ const NewsEdit = () => {
       await axios.delete(`${API_URL}/${item._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      setItems((current) => current.filter((candidate) => candidate._id !== item._id));
       invalidatePublicNews(item.dateKey);
       if (editingId === item._id) resetForm();
-      await fetchItems();
     } catch (requestError) {
       setError('Unable to delete this news item.');
     }
@@ -159,7 +170,8 @@ const NewsEdit = () => {
 
         <label>
           Complete note
-          <textarea name="content" rows="10" maxLength="20000" value={form.content} onChange={updateField} placeholder="The full explanation shown in the dated reading page." required />
+          <MarkdownPasteTextarea name="content" rows="14" maxLength="20000" value={form.content} onChange={updateField} placeholder="Paste formatted ChatGPT text or write Markdown. LaTeX works inside $…$ or $$…$$." required />
+          <small>Formatting supported: headings, bold, italic, lists, links, tables, code, blockquotes, and LaTeX math.</small>
         </label>
 
         <div className="news-edit-form__actions">
