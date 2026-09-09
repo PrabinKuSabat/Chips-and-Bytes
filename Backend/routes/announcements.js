@@ -15,10 +15,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const Announcement = require('../models/Announcement');
-
-const setPublicCacheHeaders = (res) => {
-  res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
-};
+const { preventMutableContentCaching } = require('../services/mutableContentCache');
 
 const clean = (value, maxLength) => (
   typeof value === 'string' ? value.trim().slice(0, maxLength) : ''
@@ -46,9 +43,9 @@ const normalizeAnnouncement = (body = {}) => {
 
 // Get all announcements (public)
 router.get('/', async (req, res) => {
+  preventMutableContentCaching(res);
   try {
     const announcements = await Announcement.find().sort({ createdAt: -1 }).lean();
-    setPublicCacheHeaders(res);
     res.json(announcements);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

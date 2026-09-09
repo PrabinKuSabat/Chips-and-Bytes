@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 
 const CACHE_PREFIX = 'chips-and-bytes:public-resource:';
 const DEFAULT_CACHE_TTL = 5 * 60 * 1000;
+const INVALIDATION_EVENT = 'chips-and-bytes:public-resource:invalidate';
+
+const storageKey = (cacheKey) => `${CACHE_PREFIX}${cacheKey}`;
 
 const readCachedValue = (cacheKey, maxAge) => {
   if (typeof window === 'undefined') return null;
 
   try {
-    const cached = JSON.parse(window.localStorage.getItem(`${CACHE_PREFIX}${cacheKey}`));
+    const cached = JSON.parse(window.localStorage.getItem(storageKey(cacheKey)));
     if (!cached || !Array.isArray(cached.value) || Date.now() - cached.savedAt > maxAge) {
       return null;
     }
@@ -22,12 +25,24 @@ const writeCachedValue = (cacheKey, value) => {
 
   try {
     window.localStorage.setItem(
-      `${CACHE_PREFIX}${cacheKey}`,
+      storageKey(cacheKey),
       JSON.stringify({ value, savedAt: Date.now() }),
     );
   } catch {
     // Storage is optional. The supplied fallback remains available.
   }
+};
+
+export const invalidatePublicResource = (cacheKey) => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    window.localStorage.removeItem(storageKey(cacheKey));
+  } catch {
+    // Storage is optional; the in-page event still requests fresh data.
+  }
+
+  window.dispatchEvent(new CustomEvent(INVALIDATION_EVENT, { detail: { cacheKey } }));
 };
 
 /**
@@ -49,11 +64,12 @@ export const usePublicResource = ({ cacheKey, url, fallback = [], maxAge = DEFAU
     let activeController;
 
     const refresh = async () => {
+      activeController?.abort();
       const controller = new AbortController();
       activeController = controller;
       const timeoutId = window.setTimeout(() => controller.abort(), 15000);
       try {
-        const response = await fetch(url, { signal: controller.signal });
+        const response = await fetch(url, { signal: controller.signal, cache: 'no-store' });
         if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
 
         const value = await response.json();
@@ -73,10 +89,21 @@ export const usePublicResource = ({ cacheKey, url, fallback = [], maxAge = DEFAU
 
     refresh();
     const intervalId = refreshInterval > 0 ? window.setInterval(refresh, refreshInterval) : null;
+    const handleInvalidation = (event) => {
+      if (event.detail?.cacheKey === cacheKey) refresh();
+    };
+    const handleStorage = (event) => {
+      if (event.key === storageKey(cacheKey) && event.newValue === null) refresh();
+    };
+
+    window.addEventListener(INVALIDATION_EVENT, handleInvalidation);
+    window.addEventListener('storage', handleStorage);
 
     return () => {
       isActive = false;
       if (intervalId) window.clearInterval(intervalId);
+      window.removeEventListener(INVALIDATION_EVENT, handleInvalidation);
+      window.removeEventListener('storage', handleStorage);
       activeController?.abort();
     };
   }, [cacheKey, url, refreshInterval]);

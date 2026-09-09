@@ -26,6 +26,7 @@ const EventDetailsPage = () => {
     cacheKey: 'past-events',
     url: API_URL,
     fallback: publicContentFallback.pastEvents,
+    refreshInterval: 60000,
   });
 
   /**

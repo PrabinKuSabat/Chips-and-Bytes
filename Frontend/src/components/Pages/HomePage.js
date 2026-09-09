@@ -24,6 +24,7 @@ const HomePage = () => {
     cacheKey: 'announcements',
     url: ANNOUNCEMENTS_API_URL,
     fallback: publicContentFallback.announcements,
+    refreshInterval: 60000,
   });
   const { data: events, isRefreshing: loadingEvents } = usePublicResource({
     cacheKey: 'events',

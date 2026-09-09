@@ -15,9 +15,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { invalidatePublicResource } from '../../hooks/usePublicResource';
 import './EventEdit.css';
 
 const API_URL = `${process.env.REACT_APP_BACKEND_URL}/api/events`;
+const sortEvents = (items) => [...items].sort((left, right) => (
+  `${left.date || ''}T${left.time || ''}`.localeCompare(`${right.date || ''}T${right.time || ''}`)
+));
 
 /**
  * EventEdit Component
@@ -87,15 +91,20 @@ const EventEdit = () => {
     if (!token) return alert('No token. Please login again.');
 
     try {
+      let response;
       if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, formData, {
+        response = await axios.put(`${API_URL}/${editingId}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post(API_URL, formData, {
+        response = await axios.post(API_URL, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
+      setEvents((current) => editingId
+        ? sortEvents(current.map((event) => event._id === editingId ? response.data : event))
+        : sortEvents([...current, response.data]));
+      invalidatePublicResource('events');
       setFormData({
         title: '',
         speaker: '',
@@ -105,7 +114,6 @@ const EventEdit = () => {
         description: ''
       });
       setEditingId(null);
-      fetchEvents();
     } catch (err) {
       setError('Failed to save event.');
     }
@@ -136,7 +144,12 @@ const EventEdit = () => {
       await axios.delete(`${API_URL}/${_id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      fetchEvents();
+      setEvents((current) => current.filter((event) => event._id !== _id));
+      invalidatePublicResource('events');
+      if (editingId === _id) {
+        setFormData({ title: '', speaker: '', date: '', time: '', location: '', description: '' });
+        setEditingId(null);
+      }
     } catch (err) {
       setError('Delete failed.');
     }
@@ -153,7 +166,9 @@ const EventEdit = () => {
         setFormData({ title: '', speaker: '', date: '', time: '', location: '', description: '' });
         setEditingId(null);
       }
-      fetchEvents();
+      setEvents((current) => current.filter((candidate) => candidate._id !== event._id));
+      invalidatePublicResource('events');
+      invalidatePublicResource('past-events');
     } catch (err) {
       setError(err.response?.data?.message || 'Unable to archive event.');
     }

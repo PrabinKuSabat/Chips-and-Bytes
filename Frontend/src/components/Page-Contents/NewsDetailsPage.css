@@ -116,7 +116,7 @@
 }
 
 .news-note__summary { max-width: 50rem; margin: 0 0 1.5rem; color: var(--ink-muted); font-size: 1.05rem; line-height: 1.7; }
-.news-note__content { max-width: 54rem; color: var(--ink); line-height: 1.85; white-space: pre-line; }
+.news-note__content { max-width: 54rem; color: var(--ink); line-height: 1.85; }
 .news-details-empty { padding: 2rem; color: var(--ink-muted); background: var(--surface-raised); border: 1px solid var(--line-soft); border-radius: 1rem; }
 
 @media (max-width: 620px) {

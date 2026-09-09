@@ -16,17 +16,14 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Event = require('../models/Event');
 const { archiveEventById, archiveExpiredEvents } = require('../services/eventLifecycle');
-
-const setPublicCacheHeaders = (res) => {
-  res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
-};
+const { preventMutableContentCaching } = require('../services/mutableContentCache');
 
 // GET all events (public)
 router.get('/', async (req, res) => {
+  preventMutableContentCaching(res);
   try {
     await archiveExpiredEvents();
     const events = await Event.find({}).sort({ date: 1, time: 1 }).lean();
-    setPublicCacheHeaders(res);
     res.json(events);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
